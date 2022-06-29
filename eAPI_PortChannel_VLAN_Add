@@ -1,0 +1,35 @@
+#!/usr/bin/python
+from jsonrpclib import Server
+import json
+import ssl
+
+#CREDS
+user = "admin"
+passwd = 'Arista123'
+ssl._create_default_https_context = ssl._create_unverified_context
+
+intf_description = '-uplink'
+# need all uplink port-channels to end in `-uplink` for the description (or any arbitrary end, as long as its consistent)
+switches = ['192.168.255.201', '192.168.255.202', '192.168.255.203', '192.168.255.204']
+vlan_to_add = '199'
+
+def main():
+    for switch in switches:
+          #SESSION SETUP FOR eAPI TO DEVICE
+          url = "https://%s:%s@%s/command-api" % (user, passwd, switch)
+          ss = Server(url)
+          #CONNECT TO DEVICE
+          hostname = ss.runCmds( 1, ['enable', 'show hostname' ])[1]['hostname']
+          running_config = ss.runCmds( 1, ['enable', 'show running-config' ])[1]['cmds']
+          interfaceList = []
+          for line in running_config:
+              if line.startswith('interface Port-Channel'):
+                  for conf in running_config[line]['cmds']:
+                      if conf.endswith(intf_description):
+                          interfaceList.append(line)
+          for interface in interfaceList:
+              print 'Adding VLAN '+vlan_to_add+' to '+interface+' on '+hostname
+              update_config = ss.runCmds( 1, ['enable', 'configure', interface, 'switchport trunk allowed vlan add '+vlan_to_add])
+
+if __name__ == "__main__":
+  main()
