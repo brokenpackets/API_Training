@@ -20,7 +20,8 @@ def main():
         positional = interface.replace('Ethernet','')
         baseInterface = re.sub(r'\/[0-8]','',positional)
         interfaceSpeed = interfaces[interface]['modes'][-1]['link']['speed']
-        speedList.append({'interface': interface,'baseInterface': int(baseInterface), 'interfaceSpeed': interfaceSpeed})
+        transceiverType = interfaces[interface]['transceiverType']
+        speedList.append({'interface': interface,'baseInterface': int(baseInterface), 'interfaceSpeed': interfaceSpeed, 'transceiverType': transceiverType})
     newlist = sorted(speedList, key=itemgetter('baseInterface'))
     print(newlist)
 
