@@ -37,7 +37,7 @@ def main():
                   intfIP = interfaces[interface]['interfaceAddressBrief']['ipAddr']['address']
                   neighborIP = get_peer(intfIP+'/31')
                   intfDesc = interfaces[interface]['description']
-                  configMonitor = ss.runCmds( 1, ['enable', 'configure', 'monitor connectivity','no shutdown','   host '+intfName+'_'+intfDesc,'      ip '+neighborIP])
+                  configMonitor = ss.runCmds( 1, ['enable', 'configure', 'monitor connectivity','no shutdown','   host '+intfDesc,'      ip '+neighborIP])
 
 """
 monitor connectivity
