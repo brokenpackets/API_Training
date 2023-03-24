@@ -1,7 +1,6 @@
 import json
 import requests
 import base64
-from pprint import pformat
 
 token = '<your arista.com token from user profile>'
 url = 'https://www.arista.com/custom_data/bug-alert/alertBaseDownloadApi.php'
