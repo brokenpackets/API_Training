@@ -8,8 +8,9 @@ devicelist = ['192.0.2.1','192.0.2.2']
 currentuser = 'admin'
 currentpass = ''
 token = ''
+TA_Flags = ''
 load_token = ['enable', 'bash', 'echo '+token+' /tmp/cvaas_onboarding_token']
-terminAttr = ['enable','configure','daemon TerminAttr','','shutdown','no shutdown']
+terminAttr = ['enable','configure','daemon TerminAttr',TA_Flags,'shutdown','no shutdown']
 
 def eapi(switch,cmds,type):
   if type == 'json':
