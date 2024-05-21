@@ -6,10 +6,10 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 devicelist = ['192.0.2.1','192.0.2.2']
 currentuser = 'admin'
-currentpass = ''
-token = ''
-TA_Flags = ''
-load_token = ['enable', 'bash', 'echo '+token+' /tmp/cvaas_onboarding_token']
+currentpass = 'Arista123'
+token = 'YourTokenHere '
+TA_Flags = 'daemon exec goes here'
+load_token = ['enable', 'bash timeout 10 echo '+token+' > /tmp/cvaas_onboarding_token']
 terminAttr = ['enable','configure','daemon TerminAttr',TA_Flags,'shutdown','no shutdown']
 
 def eapi(switch,cmds,type):
