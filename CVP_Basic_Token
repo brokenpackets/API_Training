@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+import requests
+import json
+
+###### User Variables
+
+
+server1 = 'https://192.168.255.50'
+token = test123
+###### Rest of script.
+connect_timeout = 10
+headers = {"Accept": "application/json",
+           "Content-Type": "application/json",
+           "Authorization": "Bearer"+token}
+requests.packages.urllib3.disable_warnings()
+session = requests.Session()
+
+def login(url_prefix):
+    headers.pop('APP_SESSION_ID', None)
+    response = session.post(url_prefix+'/web/login/authenticate.do', data=json.dumps(authdata),
+                            headers=headers, timeout=connect_timeout,
+                            verify=False)
+    cookies = response.cookies
+    headers['APP_SESSION_ID'] = response.json()['sessionId']
+    if response.json()['sessionId']:
+        return response.json()['sessionId']
+
+def logout(url_prefix):
+    response = session.post(url_prefix+'/web/login/authenticate.do')
+    return response.json()
+
+def add_configlet(url_prefix,configlet_name,configlet_body):
+  tempData = json.dumps({
+          "config": configlet_body,
+          "name": configlet_name
+  })
+  response = session.post(url_prefix+'/cvpservice/configlet/addConfiglet.do', data=tempData)
+  #return tempData
+  return response.json()
+
+print '###### Logging into Server 1'
+login(server1, username, password)
+configlet_name = 'totallyarealconfiglet'
+configlet_body = '!! This is a comment.'
+output = add_configlet(server1,configlet_name,configlet_body)
+print output
+logout(server1)
+
