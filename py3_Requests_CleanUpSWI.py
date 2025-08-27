@@ -7,7 +7,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 devicelist = ['192.168.0.80','192.168.0.71']
 currentuser = 'arista'
 currentpass = 'password'
-write_config = ['delete flash:EOS*']
+eraseSwi = ['delete flash:EOS*']
 
 def eapi(switch,cmds,type):
   if type == 'json':
@@ -44,7 +44,7 @@ def eapi(switch,cmds,type):
 
 def main():
     for switch in devicelist:
-        hostname = eapi(switch,write_config,'json')
+        hostname = eapi(switch,eraseSwi,'json')
         print(hostname)
 if __name__ == "__main__":
     main()
